@@ -7,6 +7,164 @@
 
 import Foundation
 
+// ДЗ 5
+
+//Задача 1: Написать программу, которая с помощью
+//switch-case определяет тип числа (положительное,
+//отрицательное, ноль).
+
+print("Введите число:")
+if let input = readLine(), let number = Int(input) {
+    switch number {
+    case _ where number > 0:
+        print("Число положительное")
+    case 0:
+        print("Число равно нулю")
+    default:
+        print("Число отрицательное")
+    }
+} else {
+    print("Некорректный ввод")
+}
+
+//Задача 2: Создайте простую программу-калькулятор, которая
+//запрашивает у пользователя два числа и операцию (сложение,
+//вычитание, умножение, деление). Используйте switch-case для
+//выполнения соответствующей операции.
+
+print("Введите первое число:")
+if let input1 = readLine(), let number1 = Double(input1) {
+
+    print("Введите второе число:")
+    if let input2 = readLine(), let number2 = Double(input2) {
+
+        print("Введите операцию (+, -, *, /):")
+        if let operation = readLine() {
+
+            var result: Double?
+
+            switch operation {
+            case "+":
+                result = number1 + number2
+            case "-":
+                result = number1 - number2
+            case "*":
+                result = number1 * number2
+            case "/":
+                if number2 != 0 {
+                    result = number1 / number2
+                } else {
+                    print("Ошибка: деление на ноль")
+                }
+            default:
+                print("Ошибка: неизвестная операция")
+            }
+
+            if let res = result {
+                print("Результат: \(res)")
+            }
+
+        } else {
+            print("Ошибка при вводе операции.")
+        }
+
+    } else {
+        print("Ошибка при вводе второго числа.")
+    }
+
+} else {
+    print("Ошибка при вводе первого числа.")
+}
+
+
+//Задача 3: Напишите программу, которая определяет уровень
+//доступа пользователя на основе его роли. Роль вводится в виде
+//строки и может принимать значения: admin, user, guest.
+//Пример: Введите роль пользователя: admin
+//Результат: Полный доступ
+
+print("Введите роль пользователя:")
+if let input = readLine() {
+    switch input {
+    case "admin":
+        print("Полный доступ")
+    case "user":
+        print("Доступ к части работы")
+    case "guest":
+        print("Ограниченный доступ")
+    default:
+        print("Неизвестная роль")
+    }
+}
+
+//Задача 1: Создайте перечисление TrafficLight, которое
+//описывает состояния светофора: red, yellow, green. Напишите
+//функцию, которая принимает состояние светофора и выводит
+//соответствующее действие:
+//Если red, то вывести "Стоп".
+//Если yellow, то вывести "Приготовьтесь".
+//Если green, то вывести "Можно идти".
+
+enum TrafficLight {
+    case red
+    case yellow
+    case green
+}
+
+func trafficAction(for light: TrafficLight) {
+    switch light {
+    case .red:
+        print("Стоп")
+    case .yellow:
+        print("Приготовьтесь")
+    case .green:
+        print("Можно идти")
+    }
+}
+
+//Задача 2: Создайте перечисление Weekday, которое описывает дни
+//недели: monday, tuesday, wednesday, thursday, friday,
+//saturday, sunday. Напишите функцию, которая принимает день
+//недели и выводит, является ли этот день рабочим или выходным.
+
+enum Weekday {
+    case monday, tuesday, wednesday, thursday, friday, saturday, sunday
+}
+
+func checkDay(for day: Weekday) {
+    switch day {
+    case .monday, .tuesday, .wednesday, .thursday, .friday:
+        print("Это рабочий день.")
+    case .saturday, .sunday:
+        print("Это выходной день.")
+    }
+}
+
+//Создайте перечисление CompassDirection, которое
+//описывает направления компаса: north, south, east, west.
+//Напишите программу, которая принимает направление и выводит
+//его описание: Если north, вывести "Север — холод и снег".
+//Если south, вывести "Юг — тепло и солнце".
+//Если east, вывести "Восток — рассвет и новая жизнь".
+//Если west, вывести "Запад — закат и отдых".
+
+enum CompassDirection {
+    case north, south, east, west
+}
+
+func describeDirection(_ direction: CompassDirection) {
+    switch direction {
+    case .north:
+        print("Север — холод и снег")
+    case .south:
+        print("Юг — тепло и солнце")
+    case .east:
+        print("Восток — рассвет и новая жизнь")
+    case .west:
+        print("Запад — закат и отдых")
+    }
+}
+
 // ДЗ 4
 
 // Задача 1: Вывод чисел от 1 до 10
@@ -14,53 +172,53 @@ import Foundation
 // использованием цикла for выведет на экран
 // числа от 1 до 10.
 
-for i in 1...10 {
-    print(i)
-}
+//for i in 1...10 {
+//    print(i)
+//}
 
 // Задача 2: Подсчёт суммы чисел от 1 до n
 // Напишите программу, которая запрашивает у
 // пользователя целое число n и с помощью цикла
 // for вычисляет сумму всех чисел от 1 до n
 
-print("Введите целое число n:")
-
-if let input = readLine(), let n = Int(input) {
-    var sum = 0
-    for i in 1...n {
-        sum += i
-    }
-    print("Сумма чисел от 1 до \(n) : \(sum)")
-} else {
-    print("Некорректный ввод.")
-}
+//print("Введите целое число n:")
+//
+//if let input = readLine(), let n = Int(input) {
+//    var sum = 0
+//    for i in 1...n {
+//        sum += i
+//    }
+//    print("Сумма чисел от 1 до \(n) : \(sum)")
+//} else {
+//    print("Некорректный ввод.")
+//}
 
 // Задача 3: Вывод чётных чисел
 // Напишите программу, которая с помощью цикла
 // for выведет на экран все чётные числа в
 // диапазоне от 1 до 20
 
-for i in 1...20 {
-    if i % 2 == 0 {
-        print(i)
-    }
-}
+//for i in 1...20 {
+//    if i % 2 == 0 {
+//        print(i)
+//    }
+//}
 
 // Задача 1: Вывод значений словаря
 // Создайте словарь, где ключами будут имена студентов, а
 // значениями — их оценки за экзамен. С помощью цикла for
 // выведите имена студентов и их оценки.
 
-var students: [String: Int] = [
-    "Александр": 4,
-    "Иван": 5,
-    "Максим": 5,
-    "Сергей": 4
-]
-
-for student in students {
-    print(student.key + ": " + String(student.value))
-}
+//var students: [String: Int] = [
+//    "Александр": 4,
+//    "Иван": 5,
+//    "Максим": 5,
+//    "Сергей": 4
+//]
+//
+//for student in students {
+//    print(student.key + ": " + String(student.value))
+//}
 
 //  Задача 2: Подсчёт общего количества товаров
 //  Напишите программу, которая хранит в словаре товары и их
@@ -68,20 +226,20 @@ for student in students {
 //  количество всех товаров. Например:
 //  Общее количество товаров: 100
 
-var products: [String: Int] = [
-    "Апельсины": 100,
-    "Яблоки": 50,
-    "Бананы": 75,
-    "Макароны": 200
-]
-
-var commonProducts: Int = 0
-
-for product in products {
-    commonProducts += product.value
-}
-
-print("Общее количество товаров: \(commonProducts)")
+//var products: [String: Int] = [
+//    "Апельсины": 100,
+//    "Яблоки": 50,
+//    "Бананы": 75,
+//    "Макароны": 200
+//]
+//
+//var commonProducts: Int = 0
+//
+//for product in products {
+//    commonProducts += product.value
+//}
+//
+//print("Общее количество товаров: \(commonProducts)")
 
 
 //Задача 3: Поиск по ключу
@@ -93,24 +251,24 @@ print("Общее количество товаров: \(commonProducts)")
 //Введите название города: Москва
 //Население Москвы: 12600000
 
-var cities: [String: Int] = [
-    "Москва": 12600000,
-    "Санкт-Петербург": 5300000,
-    "Екатеринбург": 5100000,
-    "Новосибирск": 1500000,
-    "Омск": 1700000
-]
-
-print("Введите название города:")
-if let input = readLine() {
-    if let population = cities[input] {
-        print("Население \(input): \(population)")
-    } else {
-        print("Город не найден")
-    }
-} else {
-    print("Некорректный ввод")
-}
+//var cities: [String: Int] = [
+//    "Москва": 12600000,
+//    "Санкт-Петербург": 5300000,
+//    "Екатеринбург": 5100000,
+//    "Новосибирск": 1500000,
+//    "Омск": 1700000
+//]
+//
+//print("Введите название города:")
+//if let input = readLine() {
+//    if let population = cities[input] {
+//        print("Население \(input): \(population)")
+//    } else {
+//        print("Город не найден")
+//    }
+//} else {
+//    print("Некорректный ввод")
+//}
 
 //Задание: Соревнования команд
 //Описание задачи:
@@ -134,49 +292,49 @@ if let input = readLine() {
 //Условия: Программа должна быть хорошо структурирована, с использованием методов для обработки участников и их заданий.
 //● Каждое задание для участника должно оцениваться отдельно, с выводом: выполнено оно успешно или нет.
 
-func isTaskCompleted(score: Int) -> Bool {
-    return score >= 70
-}
-
-func evaluateMember(name: String, scores: [Int]) {
-    print("  Участник: \(name)")
-    
-    var taskNumber = 1
-    for score in scores {
-        if isTaskCompleted(score: score) {
-            print("    Задание \(taskNumber): \(score) баллов — выполнено")
-        } else {
-            print("    Задание \(taskNumber): \(score) баллов — не выполнено")
-        }
-        taskNumber += 1
-    }
-}
-
-let team1 = [
-    "Иван": [80, 65, 90],
-    "Ольга": [72, 68, 75]
-]
-
-let team2 = [
-    "Олег": [60, 55, 95],
-    "Вера": [85, 100, 92]
-]
-
-let allTeams = [
-    "Команда 1": team1,
-    "Команда 2": team2
-]
-
-for team in allTeams {
-    print("\nКоманда: \(team.key)")
-    
-    for memder in team.value {
-        evaluateMember(name: memder.key, scores: memder.value)
-    }
-}
-
-
-
+//func isTaskCompleted(score: Int) -> Bool {
+//    return score >= 70
+//}
+//
+//func evaluateMember(name: String, scores: [Int]) {
+//    print("  Участник: \(name)")
+//    
+//    var taskNumber = 1
+//    for score in scores {
+//        if isTaskCompleted(score: score) {
+//            print("    Задание \(taskNumber): \(score) баллов — выполнено")
+//        } else {
+//            print("    Задание \(taskNumber): \(score) баллов — не выполнено")
+//        }
+//        taskNumber += 1
+//    }
+//}
+//
+//let team1 = [
+//    "Иван": [80, 65, 90],
+//    "Ольга": [72, 68, 75]
+//]
+//
+//let team2 = [
+//    "Олег": [60, 55, 95],
+//    "Вера": [85, 100, 92]
+//]
+//
+//let allTeams = [
+//    "Команда 1": team1,
+//    "Команда 2": team2
+//]
+//
+//for team in allTeams {
+//    print("\nКоманда: \(team.key)")
+//    
+//    for memder in team.value {
+//        evaluateMember(name: memder.key, scores: memder.value)
+//    }
+//}
+//
+//
+//
 
 //// ДЗ 3
 //
