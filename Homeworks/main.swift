@@ -7,74 +7,233 @@
 
 import Foundation
 
+// ДЗ 6
+
+//Задача 1: Создайте перечисление для представления четырёх
+//сторон света (north, south, east, west). Реализуйте метод,
+//который для каждого направления выводит соответствующее
+//описание (например, "Север — холод и снег").
+
+enum CompassDirection {
+    case north
+    case south
+    case east
+    case west
+    
+    func description() -> String {
+        switch self {
+        case .north:
+            return "Север — холод и снег"
+        case .south:
+            return "Юг — легкий ветер и солнечный день"
+        case .east:
+            return "Восток — большой океан и природа"
+        case .west:
+            return "Запад — тихие улицы и маленькие домы"
+        }
+    }
+}
+
+//Задача 2: Реализуйте перечисление для статусов заказа
+//(ordered, shipped, delivered, cancelled) и напишите
+//функцию, которая выводит текущее состояние заказа.
+
+enum OrderStatus {
+    case ordered
+    case shipped
+    case delivered
+    case cancelled
+    
+    func currentStatus() -> String {
+        switch self {
+        case .ordered:
+            return "Заказ оформлен"
+        case .shipped:
+            return "Заказ отправлен"
+        case .delivered:
+            return "Заказ доставлен"
+        case .cancelled:
+            return "Заказ отменен"
+        }
+    }
+}
+
+//Задача 3: Создайте перечисление для различных типов
+//социальных сетей (facebook, twitter, instagram) и функцию,
+//которая выводит популярный хэштег для каждой сети.
+
+enum SocialNetwork {
+    case facebook
+    case twitter
+    case instagram
+    
+    func popularHashtag() -> String {
+        switch self {
+        case .facebook:
+            return "#fb"
+        case .twitter:
+            return "#twitter"
+        case .instagram:
+            return "#instagram"
+        }
+    }
+}
+
+//Задача 4: Создайте перечисление Grade, которое описывает
+//оценки студента: excellent, good, satisfactory,
+//unsatisfactory. Напишите функцию, которая принимает
+//оценку и выводит сообщение:
+//● excellent: "Отлично! Ты молодец!"
+//● good: "Хорошо! Можешь лучше."
+//● satisfactory: "Удовлетворительно. Стоит подтянуть
+//знания."
+//● unsatisfactory: "Неудовлетворительно. Нужно больше
+//учиться."
+
+enum Grade {
+    case excellent
+    case good
+    case satisfactory
+    case unsatisfactory
+}
+
+func evaluate(grade: Grade) {
+    switch grade {
+    case .excellent:
+        print("Отлично! Ты молодец!")
+    case .good:
+        print("Хорошо! Можешь лучше.")
+    case .satisfactory:
+        print("Удовлетворительно. Стоит подтянуть знания.")
+    case .unsatisfactory:
+        print("Неудовлетворительно. Нужно больше учиться.")
+    }
+}
+
+//Задача 1: Создайте перечисление Season, которое описывает
+//времена года: winter, spring, summer, autumn. Напишите
+//функцию, которая принимает время года и выводит
+//соответствующее описание:
+//● winter: "Зима — холодное время года, часто идёт снег."
+//● spring: "Весна — пробуждение природы, цветут цветы."
+//● summer: "Лето — жаркое время года, можно купаться."
+//● autumn: "Осень — время сбора урожая и опадающих
+//листьев."
+
+enum Season {
+    case winter
+    case spring
+    case summer
+    case autumn
+    
+    func description() -> String {
+        switch self {
+        case .winter:
+            return "Зима — холодное время года, часто идёт снег."
+        case .spring:
+            return "Весна — пробуждение природы, цветут цветы."
+        case .summer:
+            return "Лето — жаркое время года, можно купаться."
+        case .autumn:
+            return "Осень — время сбора урожая и опадающих листьев."
+        }
+    }
+}
+
+//Задача 2: Создайте перечисление DeviceState, которое
+//описывает состояния устройства: on, off, sleep. Напишите
+//функцию, которая принимает текущее состояние устройства и
+//выводит сообщение:
+//● on: "Устройство включено."
+//● off: "Устройство выключено."
+//● sleep: "Устройство находится в режиме сна."
+
+enum DeviceState {
+    case on
+    case off
+    case sleep
+    
+    func description() -> String {
+        switch self {
+        case .on:
+            return "Устройство включено."
+        case .off:
+            return "Устройство выключено."
+        case .sleep:
+            return "Устройство находится в режиме сна."
+        }
+    }
+}
+
+
 // ДЗ 5
 
 //Задача 1: Написать программу, которая с помощью
 //switch-case определяет тип числа (положительное,
 //отрицательное, ноль).
 
-print("Введите число:")
-if let input = readLine(), let number = Int(input) {
-    switch number {
-    case _ where number > 0:
-        print("Число положительное")
-    case 0:
-        print("Число равно нулю")
-    default:
-        print("Число отрицательное")
-    }
-} else {
-    print("Некорректный ввод")
-}
+//print("Введите число:")
+//if let input = readLine(), let number = Int(input) {
+//    switch number {
+//    case _ where number > 0:
+//        print("Число положительное")
+//    case 0:
+//        print("Число равно нулю")
+//    default:
+//        print("Число отрицательное")
+//    }
+//} else {
+//    print("Некорректный ввод")
+//}
 
 //Задача 2: Создайте простую программу-калькулятор, которая
 //запрашивает у пользователя два числа и операцию (сложение,
 //вычитание, умножение, деление). Используйте switch-case для
 //выполнения соответствующей операции.
 
-print("Введите первое число:")
-if let input1 = readLine(), let number1 = Double(input1) {
-
-    print("Введите второе число:")
-    if let input2 = readLine(), let number2 = Double(input2) {
-
-        print("Введите операцию (+, -, *, /):")
-        if let operation = readLine() {
-
-            var result: Double?
-
-            switch operation {
-            case "+":
-                result = number1 + number2
-            case "-":
-                result = number1 - number2
-            case "*":
-                result = number1 * number2
-            case "/":
-                if number2 != 0 {
-                    result = number1 / number2
-                } else {
-                    print("Ошибка: деление на ноль")
-                }
-            default:
-                print("Ошибка: неизвестная операция")
-            }
-
-            if let res = result {
-                print("Результат: \(res)")
-            }
-
-        } else {
-            print("Ошибка при вводе операции.")
-        }
-
-    } else {
-        print("Ошибка при вводе второго числа.")
-    }
-
-} else {
-    print("Ошибка при вводе первого числа.")
-}
+//print("Введите первое число:")
+//if let input1 = readLine(), let number1 = Double(input1) {
+//
+//    print("Введите второе число:")
+//    if let input2 = readLine(), let number2 = Double(input2) {
+//
+//        print("Введите операцию (+, -, *, /):")
+//        if let operation = readLine() {
+//
+//            var result: Double?
+//
+//            switch operation {
+//            case "+":
+//                result = number1 + number2
+//            case "-":
+//                result = number1 - number2
+//            case "*":
+//                result = number1 * number2
+//            case "/":
+//                if number2 != 0 {
+//                    result = number1 / number2
+//                } else {
+//                    print("Ошибка: деление на ноль")
+//                }
+//            default:
+//                print("Ошибка: неизвестная операция")
+//            }
+//
+//            if let res = result {
+//                print("Результат: \(res)")
+//            }
+//
+//        } else {
+//            print("Ошибка при вводе операции.")
+//        }
+//
+//    } else {
+//        print("Ошибка при вводе второго числа.")
+//    }
+//
+//} else {
+//    print("Ошибка при вводе первого числа.")
+//}
 
 
 //Задача 3: Напишите программу, которая определяет уровень
@@ -83,19 +242,19 @@ if let input1 = readLine(), let number1 = Double(input1) {
 //Пример: Введите роль пользователя: admin
 //Результат: Полный доступ
 
-print("Введите роль пользователя:")
-if let input = readLine() {
-    switch input {
-    case "admin":
-        print("Полный доступ")
-    case "user":
-        print("Доступ к части работы")
-    case "guest":
-        print("Ограниченный доступ")
-    default:
-        print("Неизвестная роль")
-    }
-}
+//print("Введите роль пользователя:")
+//if let input = readLine() {
+//    switch input {
+//    case "admin":
+//        print("Полный доступ")
+//    case "user":
+//        print("Доступ к части работы")
+//    case "guest":
+//        print("Ограниченный доступ")
+//    default:
+//        print("Неизвестная роль")
+//    }
+//}
 
 //Задача 1: Создайте перечисление TrafficLight, которое
 //описывает состояния светофора: red, yellow, green. Напишите
@@ -105,40 +264,40 @@ if let input = readLine() {
 //Если yellow, то вывести "Приготовьтесь".
 //Если green, то вывести "Можно идти".
 
-enum TrafficLight {
-    case red
-    case yellow
-    case green
-}
-
-func trafficAction(for light: TrafficLight) {
-    switch light {
-    case .red:
-        print("Стоп")
-    case .yellow:
-        print("Приготовьтесь")
-    case .green:
-        print("Можно идти")
-    }
-}
+//enum TrafficLight {
+//    case red
+//    case yellow
+//    case green
+//}
+//
+//func trafficAction(for light: TrafficLight) {
+//    switch light {
+//    case .red:
+//        print("Стоп")
+//    case .yellow:
+//        print("Приготовьтесь")
+//    case .green:
+//        print("Можно идти")
+//    }
+//}
 
 //Задача 2: Создайте перечисление Weekday, которое описывает дни
 //недели: monday, tuesday, wednesday, thursday, friday,
 //saturday, sunday. Напишите функцию, которая принимает день
 //недели и выводит, является ли этот день рабочим или выходным.
 
-enum Weekday {
-    case monday, tuesday, wednesday, thursday, friday, saturday, sunday
-}
-
-func checkDay(for day: Weekday) {
-    switch day {
-    case .monday, .tuesday, .wednesday, .thursday, .friday:
-        print("Это рабочий день.")
-    case .saturday, .sunday:
-        print("Это выходной день.")
-    }
-}
+//enum Weekday {
+//    case monday, tuesday, wednesday, thursday, friday, saturday, sunday
+//}
+//
+//func checkDay(for day: Weekday) {
+//    switch day {
+//    case .monday, .tuesday, .wednesday, .thursday, .friday:
+//        print("Это рабочий день.")
+//    case .saturday, .sunday:
+//        print("Это выходной день.")
+//    }
+//}
 
 //Создайте перечисление CompassDirection, которое
 //описывает направления компаса: north, south, east, west.
@@ -148,22 +307,22 @@ func checkDay(for day: Weekday) {
 //Если east, вывести "Восток — рассвет и новая жизнь".
 //Если west, вывести "Запад — закат и отдых".
 
-enum CompassDirection {
-    case north, south, east, west
-}
-
-func describeDirection(_ direction: CompassDirection) {
-    switch direction {
-    case .north:
-        print("Север — холод и снег")
-    case .south:
-        print("Юг — тепло и солнце")
-    case .east:
-        print("Восток — рассвет и новая жизнь")
-    case .west:
-        print("Запад — закат и отдых")
-    }
-}
+//enum CompassDirection {
+//    case north, south, east, west
+//}
+//
+//func describeDirection(_ direction: CompassDirection) {
+//    switch direction {
+//    case .north:
+//        print("Север — холод и снег")
+//    case .south:
+//        print("Юг — тепло и солнце")
+//    case .east:
+//        print("Восток — рассвет и новая жизнь")
+//    case .west:
+//        print("Запад — закат и отдых")
+//    }
+//}
 
 // ДЗ 4
 
