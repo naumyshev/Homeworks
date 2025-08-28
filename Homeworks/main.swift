@@ -7,6 +7,96 @@
 
 import Foundation
 
+// ДЗ 7
+
+//1. Описать несколько структур – любой легковой автомобиль SportCar и любой грузовик
+//TrunkCar.
+//2. Структуры должны содержать марку авто, год выпуска, объем багажника/кузова, запущен ли
+//двигатель, открыты ли окна, заполненный объем багажника.
+//3. Описать перечисление с возможными действиями с автомобилем: запустить/заглушить
+//двигатель, открыть/закрыть окна, погрузить/выгрузить из кузова/багажника груз определенного
+//объема.
+//4. Добавить в структуры метод с одним аргументом типа перечисления, который будет менять
+//свойства структуры в зависимости от действия.
+//5. Инициализировать несколько экземпляров структур. Применить к ним различные действия.
+//6. Вывести значения свойств экземпляров в консоль.
+
+struct SportCar {
+    var brand: String
+    var year: Int
+    var trunkVolume: Int
+    var engineIsStarted: Bool
+    var windowsAreOpen: Bool
+    var trunkIsFull: Bool
+    
+    mutating func performAction(_ action: CarAction) {
+        switch action {
+        case .startEngine:
+            engineIsStarted = true
+        case .stopEngine:
+            engineIsStarted = false
+        case .openWindows:
+            windowsAreOpen = true
+        case .closeWindows:
+            windowsAreOpen = false
+        case .load(let volume):
+            trunkIsFull = volume >= trunkVolume
+        case .unload(let volume):
+            trunkIsFull = !trunkIsFull
+        }
+    }
+}
+
+struct TrunkCar {
+    var brand: String
+    var year: Int
+    var trunkVolume: Int
+    var engineIsStarted: Bool
+    var windowsAreOpen: Bool
+    var trunkIsFull: Bool
+    
+    mutating func performAction(_ action: CarAction) {
+        switch action {
+        case .startEngine:
+            engineIsStarted = true
+        case .stopEngine:
+            engineIsStarted = false
+        case .openWindows:
+            windowsAreOpen = true
+        case .closeWindows:
+            windowsAreOpen = false
+        case .load(let volume):
+            trunkIsFull = volume >= trunkVolume
+        case .unload(let volume):
+            trunkIsFull = !trunkIsFull
+        }
+    }
+}
+
+enum CarAction {
+    case startEngine
+    case stopEngine
+    case openWindows
+    case closeWindows
+    case load(Int)
+    case unload(Int)
+}
+
+var myCar = TrunkCar(brand: "Toyota", year: 2010, trunkVolume: 1500, engineIsStarted: false, windowsAreOpen: false, trunkIsFull: false)
+
+myCar.performAction(.startEngine)
+myCar.performAction(.load(1000))
+myCar.performAction(.load(500))
+myCar.performAction(.unload( 800))
+
+var yourCar = SportCar(brand: "Tesla", year: 2020, trunkVolume: 2000, engineIsStarted: false, windowsAreOpen: false, trunkIsFull: false)
+
+yourCar.performAction(.startEngine)
+yourCar.performAction(.load(1000))
+yourCar.performAction(.load(500))
+yourCar.performAction(.unload( 800))
+
+
 // ДЗ 6
 
 //Задача 1: Создайте перечисление для представления четырёх
@@ -14,70 +104,70 @@ import Foundation
 //который для каждого направления выводит соответствующее
 //описание (например, "Север — холод и снег").
 
-enum CompassDirection {
-    case north
-    case south
-    case east
-    case west
-    
-    func description() -> String {
-        switch self {
-        case .north:
-            return "Север — холод и снег"
-        case .south:
-            return "Юг — легкий ветер и солнечный день"
-        case .east:
-            return "Восток — большой океан и природа"
-        case .west:
-            return "Запад — тихие улицы и маленькие домы"
-        }
-    }
-}
+//enum CompassDirection {
+//    case north
+//    case south
+//    case east
+//    case west
+//    
+//    func description() -> String {
+//        switch self {
+//        case .north:
+//            return "Север — холод и снег"
+//        case .south:
+//            return "Юг — легкий ветер и солнечный день"
+//        case .east:
+//            return "Восток — большой океан и природа"
+//        case .west:
+//            return "Запад — тихие улицы и маленькие домы"
+//        }
+//    }
+//}
 
 //Задача 2: Реализуйте перечисление для статусов заказа
 //(ordered, shipped, delivered, cancelled) и напишите
 //функцию, которая выводит текущее состояние заказа.
 
-enum OrderStatus {
-    case ordered
-    case shipped
-    case delivered
-    case cancelled
-    
-    func currentStatus() -> String {
-        switch self {
-        case .ordered:
-            return "Заказ оформлен"
-        case .shipped:
-            return "Заказ отправлен"
-        case .delivered:
-            return "Заказ доставлен"
-        case .cancelled:
-            return "Заказ отменен"
-        }
-    }
-}
+//enum OrderStatus {
+//    case ordered
+//    case shipped
+//    case delivered
+//    case cancelled
+//    
+//    func currentStatus() -> String {
+//        switch self {
+//        case .ordered:
+//            return "Заказ оформлен"
+//        case .shipped:
+//            return "Заказ отправлен"
+//        case .delivered:
+//            return "Заказ доставлен"
+//        case .cancelled:
+//            return "Заказ отменен"
+//        }
+//    }
+//}
 
 //Задача 3: Создайте перечисление для различных типов
 //социальных сетей (facebook, twitter, instagram) и функцию,
 //которая выводит популярный хэштег для каждой сети.
 
-enum SocialNetwork {
-    case facebook
-    case twitter
-    case instagram
-    
-    func popularHashtag() -> String {
-        switch self {
-        case .facebook:
-            return "#fb"
-        case .twitter:
-            return "#twitter"
-        case .instagram:
-            return "#instagram"
-        }
-    }
-}
+//enum SocialNetwork {
+//    case facebook
+//    case twitter
+//    case instagram
+//    
+//    func popularHashtag() -> String {
+//        switch self {
+//        case .facebook:
+//            return "#fb"
+//        case .twitter:
+//            return "#twitter"
+//        case .instagram:
+//            return "#instagram"
+//        }
+//    }
+//}
 
 //Задача 4: Создайте перечисление Grade, которое описывает
 //оценки студента: excellent, good, satisfactory,
@@ -90,25 +180,25 @@ enum SocialNetwork {
 //● unsatisfactory: "Неудовлетворительно. Нужно больше
 //учиться."
 
-enum Grade {
-    case excellent
-    case good
-    case satisfactory
-    case unsatisfactory
-}
-
-func evaluate(grade: Grade) {
-    switch grade {
-    case .excellent:
-        print("Отлично! Ты молодец!")
-    case .good:
-        print("Хорошо! Можешь лучше.")
-    case .satisfactory:
-        print("Удовлетворительно. Стоит подтянуть знания.")
-    case .unsatisfactory:
-        print("Неудовлетворительно. Нужно больше учиться.")
-    }
-}
+//enum Grade {
+//    case excellent
+//    case good
+//    case satisfactory
+//    case unsatisfactory
+//}
+//
+//func evaluate(grade: Grade) {
+//    switch grade {
+//    case .excellent:
+//        print("Отлично! Ты молодец!")
+//    case .good:
+//        print("Хорошо! Можешь лучше.")
+//    case .satisfactory:
+//        print("Удовлетворительно. Стоит подтянуть знания.")
+//    case .unsatisfactory:
+//        print("Неудовлетворительно. Нужно больше учиться.")
+//    }
+//}
 
 //Задача 1: Создайте перечисление Season, которое описывает
 //времена года: winter, spring, summer, autumn. Напишите
@@ -120,25 +210,25 @@ func evaluate(grade: Grade) {
 //● autumn: "Осень — время сбора урожая и опадающих
 //листьев."
 
-enum Season {
-    case winter
-    case spring
-    case summer
-    case autumn
-    
-    func description() -> String {
-        switch self {
-        case .winter:
-            return "Зима — холодное время года, часто идёт снег."
-        case .spring:
-            return "Весна — пробуждение природы, цветут цветы."
-        case .summer:
-            return "Лето — жаркое время года, можно купаться."
-        case .autumn:
-            return "Осень — время сбора урожая и опадающих листьев."
-        }
-    }
-}
+//enum Season {
+//    case winter
+//    case spring
+//    case summer
+//    case autumn
+//    
+//    func description() -> String {
+//        switch self {
+//        case .winter:
+//            return "Зима — холодное время года, часто идёт снег."
+//        case .spring:
+//            return "Весна — пробуждение природы, цветут цветы."
+//        case .summer:
+//            return "Лето — жаркое время года, можно купаться."
+//        case .autumn:
+//            return "Осень — время сбора урожая и опадающих листьев."
+//        }
+//    }
+//}
 
 //Задача 2: Создайте перечисление DeviceState, которое
 //описывает состояния устройства: on, off, sleep. Напишите
@@ -148,22 +238,22 @@ enum Season {
 //● off: "Устройство выключено."
 //● sleep: "Устройство находится в режиме сна."
 
-enum DeviceState {
-    case on
-    case off
-    case sleep
-    
-    func description() -> String {
-        switch self {
-        case .on:
-            return "Устройство включено."
-        case .off:
-            return "Устройство выключено."
-        case .sleep:
-            return "Устройство находится в режиме сна."
-        }
-    }
-}
+//enum DeviceState {
+//    case on
+//    case off
+//    case sleep
+//    
+//    func description() -> String {
+//        switch self {
+//        case .on:
+//            return "Устройство включено."
+//        case .off:
+//            return "Устройство выключено."
+//        case .sleep:
+//            return "Устройство находится в режиме сна."
+//        }
+//    }
+//}
 
 
 // ДЗ 5
