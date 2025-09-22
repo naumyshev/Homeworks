@@ -7,6 +7,156 @@
 
 import Foundation
 
+// ДЗ 9
+
+//Задача 1: Создайте класс Shape с методом area(), который
+//возвращает площадь фигуры.
+
+class Shape {
+    func area() -> Double {
+        return 0.0
+    }
+}
+
+//Задача 2: Создайте подкласс Rectangle, который наследует
+//Shape, и переопределите метод area(), чтобы возвращать
+//площадь прямоугольника.
+
+class Rectangle: Shape {
+    var length: Double
+    var width: Double
+    
+    init(length: Double, width: Double) {
+        self.length = length
+        self.width = width
+    }
+    
+    override func area() -> Double {
+        self.length * self.width
+    }
+}
+
+//Задача 3: Создайте класс Circle, который также наследует
+//Shape и реализует метод area() для круга.
+
+class Circle: Shape {
+    var radius: Double
+    
+    init(radius: Double) {
+        self.radius = radius
+    }
+    
+    override func area() -> Double {
+        .pi * self.radius * self.radius
+    }
+}
+
+// Домашнее задание: Создание системы учёта студентов и сотрудников университета
+// Описание задачи:
+// 1. Создайте базовый класс Person, который будет представлять общие свойства и методы для людей.
+// ○ Свойства:
+//  ■ name: String — имя человека.
+//  ■ age: Int — возраст человека.
+// ○ Инициализатор:
+//  ■ Используйте guard для проверки, что имя не пустое, а возраст больше нуля. Если данные некорректные,
+// инициализатор должен возвращать nil.
+// ○ Метод:
+//  ■ describe() — метод, который выводит информацию о человеке.
+// 2. Создайте класс Student, который наследует класс Person:
+//  ○ Дополнительное свойство:
+// ■ studentID: String — идентификатор студента.
+//  ○ Инициализатор:
+// ■ Помимо проверки имени и возраста, используйте guard для проверки, что studentID не пустой.
+//  ○ Переопределённый метод:
+// ■ Переопределите метод describe(), чтобы выводить дополнительную информацию о студенте, включая его
+// studentID.
+// Создайте класс Professor, который также наследует класс Person:
+// ○ Дополнительное свойство:
+// ■ subject: String — предмет, который преподаёт профессор.
+//  ○ Инициализатор:
+// ■ Используйте guard, чтобы проверить, что имя не пустое, возраст больше нуля, и предмет также не пустой.
+//  ○ Переопределённый метод:
+// ■ Переопределите метод describe(), чтобы выводить информацию о профессоре и предмете, который он
+// преподаёт.
+// Пример использования:
+// 1. Создайте несколько объектов классов Student и Professor.
+// 2. Выведите информацию о каждом человеке с помощью метода describe().
+// Ожидаемое поведение:
+//  ● Если данные для создания объекта некорректны (например, возраст меньше 0 или имя пустое), объект не должен
+// создаваться (инициализатор должен вернуть nil).
+//  ● Если объект успешно создан, метод describe() должен корректно выводить информацию о человеке.
+
+
+class Person {
+    var name: String
+    var age: Int
+    
+    init?(name: String, age: Int) {
+        guard !name.isEmpty, age > 0 else {
+            return nil
+        }
+        self.name = name
+        self.age = age
+    }
+    
+    func describe() {
+        print("Имя: \(name), возраст: \(age)")
+    }
+}
+
+class Student: Person {
+    var studentID: String
+    
+    init?(name: String, age: Int, studentID: String) {
+        guard !studentID.isEmpty else {
+            return nil
+        }
+        self.studentID = studentID
+        super.init(name: name, age: age)
+    }
+    
+    override func describe() {
+        print("Студент: \(name), возраст: \(age), ID: \(studentID)")
+    }
+}
+
+class Professor: Person {
+    var subject: String
+    
+    init?(name: String, age: Int, subject: String) {
+        guard !subject.isEmpty else {
+            return nil
+        }
+        self.subject = subject
+        super.init(name: name, age: age)
+    }
+    
+    override func describe() {
+        print("Профессор: \(name), возраст: \(age), преподаёт: \(subject)")
+    }
+}
+
+if let student1 = Student(name: "Алексей", age: 20, studentID: "S123") {
+    student1.describe()
+}
+
+if let student2 = Student(name: "", age: 21, studentID: "S124") {
+    student2.describe()
+} else {
+    print("Ошибка: студент не создан (некорректные данные)")
+}
+
+if let professor1 = Professor(name: "Иван Иванович", age: 45, subject: "Математика") {
+    professor1.describe()
+}
+
+if let professor2 = Professor(name: "Сергей", age: -5, subject: "Физика") {
+    professor2.describe()
+} else {
+    print("Ошибка: профессор не создан (некорректные данные)")
+}
+
+
 // ДЗ 7
 
 //1. Описать несколько структур – любой легковой автомобиль SportCar и любой грузовик
@@ -21,80 +171,80 @@ import Foundation
 //5. Инициализировать несколько экземпляров структур. Применить к ним различные действия.
 //6. Вывести значения свойств экземпляров в консоль.
 
-struct SportCar {
-    var brand: String
-    var year: Int
-    var trunkVolume: Int
-    var engineIsStarted: Bool
-    var windowsAreOpen: Bool
-    var trunkIsFull: Bool
-    
-    mutating func performAction(_ action: CarAction) {
-        switch action {
-        case .startEngine:
-            engineIsStarted = true
-        case .stopEngine:
-            engineIsStarted = false
-        case .openWindows:
-            windowsAreOpen = true
-        case .closeWindows:
-            windowsAreOpen = false
-        case .load(let volume):
-            trunkIsFull = volume >= trunkVolume
-        case .unload(let volume):
-            trunkIsFull = !trunkIsFull
-        }
-    }
-}
+//struct SportCar {
+//    var brand: String
+//    var year: Int
+//    var trunkVolume: Int
+//    var engineIsStarted: Bool
+//    var windowsAreOpen: Bool
+//    var trunkIsFull: Bool
+//    
+//    mutating func performAction(_ action: CarAction) {
+//        switch action {
+//        case .startEngine:
+//            engineIsStarted = true
+//        case .stopEngine:
+//            engineIsStarted = false
+//        case .openWindows:
+//            windowsAreOpen = true
+//        case .closeWindows:
+//            windowsAreOpen = false
+//        case .load(let volume):
+//            trunkIsFull = volume >= trunkVolume
+//        case .unload(let volume):
+//            trunkIsFull = !trunkIsFull
+//        }
+//    }
+//}
 
-struct TrunkCar {
-    var brand: String
-    var year: Int
-    var trunkVolume: Int
-    var engineIsStarted: Bool
-    var windowsAreOpen: Bool
-    var trunkIsFull: Bool
-    
-    mutating func performAction(_ action: CarAction) {
-        switch action {
-        case .startEngine:
-            engineIsStarted = true
-        case .stopEngine:
-            engineIsStarted = false
-        case .openWindows:
-            windowsAreOpen = true
-        case .closeWindows:
-            windowsAreOpen = false
-        case .load(let volume):
-            trunkIsFull = volume >= trunkVolume
-        case .unload(let volume):
-            trunkIsFull = !trunkIsFull
-        }
-    }
-}
+//struct TrunkCar {
+//    var brand: String
+//    var year: Int
+//    var trunkVolume: Int
+//    var engineIsStarted: Bool
+//    var windowsAreOpen: Bool
+//    var trunkIsFull: Bool
+//    
+//    mutating func performAction(_ action: CarAction) {
+//        switch action {
+//        case .startEngine:
+//            engineIsStarted = true
+//        case .stopEngine:
+//            engineIsStarted = false
+//        case .openWindows:
+//            windowsAreOpen = true
+//        case .closeWindows:
+//            windowsAreOpen = false
+//        case .load(let volume):
+//            trunkIsFull = volume >= trunkVolume
+//        case .unload(let volume):
+//            trunkIsFull = !trunkIsFull
+//        }
+//    }
+//}
 
-enum CarAction {
-    case startEngine
-    case stopEngine
-    case openWindows
-    case closeWindows
-    case load(Int)
-    case unload(Int)
-}
+//enum CarAction {
+//    case startEngine
+//    case stopEngine
+//    case openWindows
+//    case closeWindows
+//    case load(Int)
+//    case unload(Int)
+//}
 
-var myCar = TrunkCar(brand: "Toyota", year: 2010, trunkVolume: 1500, engineIsStarted: false, windowsAreOpen: false, trunkIsFull: false)
-
-myCar.performAction(.startEngine)
-myCar.performAction(.load(1000))
-myCar.performAction(.load(500))
-myCar.performAction(.unload( 800))
-
-var yourCar = SportCar(brand: "Tesla", year: 2020, trunkVolume: 2000, engineIsStarted: false, windowsAreOpen: false, trunkIsFull: false)
-
-yourCar.performAction(.startEngine)
-yourCar.performAction(.load(1000))
-yourCar.performAction(.load(500))
-yourCar.performAction(.unload( 800))
+//var myCar = TrunkCar(brand: "Toyota", year: 2010, trunkVolume: 1500, engineIsStarted: false, windowsAreOpen: false, trunkIsFull: false)
+//
+//myCar.performAction(.startEngine)
+//myCar.performAction(.load(1000))
+//myCar.performAction(.load(500))
+//myCar.performAction(.unload( 800))
+//
+//var yourCar = SportCar(brand: "Tesla", year: 2020, trunkVolume: 2000, engineIsStarted: false, windowsAreOpen: false, trunkIsFull: false)
+//
+//yourCar.performAction(.startEngine)
+//yourCar.performAction(.load(1000))
+//yourCar.performAction(.load(500))
+//yourCar.performAction(.unload( 800))
 
 
 // ДЗ 6
