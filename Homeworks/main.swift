@@ -7,49 +7,175 @@
 
 import Foundation
 
+// ДЗ 10
+
+//Задача 1: Создайте протокол Playable: Метод: play(),
+//который не принимает параметров и ничего не возвращает.
+
+protocol Playable {
+    func play()
+}
+
+extension Playable {
+    func tune() {
+       print("Настройка инструмента...")
+    }
+}
+
+//Задача 2: Создайте классы Piano, Guitar и Drum, которые
+//соответствуют протоколу Playable: У каждого класса метод
+//play() должен выводить, что за инструмент играет (например,
+//"Пианино играет мелодию").
+
+class Piano: Playable {
+    func play() {
+        print("Пианино играет мелодию")
+    }
+}
+
+class Guitar: Playable {
+    func play() {
+        print("Гитара играет мелодию")
+    }
+}
+
+class Drum: Playable {
+    func play() {
+        print("Барабаны играют")
+    }
+}
+
+//Задача 3: Создайте функцию performConcert, которая
+//принимает массив объектов, соответствующих Playable, и
+//вызывает метод play() для каждого из них.
+
+func performConcert(_ instruments: [Playable]) {
+    for instrument in instruments {
+        instrument.tune()
+        instrument.play()
+    }
+}
+
+//Задача 4. Создайте расширение для Playable, которое
+//добавляет метод tune(), выводящий сообщение "Настройка
+//инструмента...", и вызовите его в функциях каждого объекта
+//перед play().
+
+let instrunents: [Playable] = [Piano(), Guitar(), Drum()]
+
+
+performConcert(instrunents)
+
+//Домашнее задание: Создание системы учёта студентов и сотрудников университета
+//Вам необходимо разработать программу, которая моделирует работу принтера, способного печатать разными цветами.
+//Требования:
+//1. Протоколы:
+//○ Создайте протокол Ink, который определяет метод print().
+//2. Классы чернил:
+//○ Реализуйте несколько классов чернил (например, RedInk, BlueInk, GreenInk), каждый из которых соответствует
+//протоколу Ink.
+//○ В каждом классе реализуйте метод print(), который выводит сообщение о печати с использованием
+//соответствующего цвета (можете использовать простые строки для имитации цвета).
+//3. Класс принтера:
+//○ Создайте класс Printer, который имеет свойство ink типа Ink.
+//○ Добавьте метод startPrinting(), который вызывает метод print() у текущего объекта ink.
+//4. Демонстрация полиморфизма: В основном блоке кода создайте экземпляр Printer. Последовательно назначайте ему
+//различные объекты чернил (RedInk, BlueInk, GreenInk) и вызывайте метод startPrinting(), демонстрируя
+//полиморфное поведение.
+//5. Используйте перечисления enum для определения доступных цветов.
+
+protocol Ink {
+    func printColor()
+}
+
+enum ColorInk {
+    case red
+    case blue
+    case green
+}
+
+class RedInk: Ink {
+    func printColor() {
+        print("Печать в красном цвете...")
+    }
+}
+
+class BlueInk: Ink {
+    func printColor() {
+        print("Печать в синем цвете...")
+    }
+}
+
+class GreenInk: Ink {
+    func printColor() {
+        print("Печать в зеленом цвете...")
+    }
+}
+
+class Printer {
+    var ink: Ink
+    
+    init(ink: Ink) {
+        self.ink = ink
+    }
+    
+    func startPrinting() {
+        ink.printColor()
+    }
+}
+
+var printer = Printer(ink: RedInk())
+printer.startPrinting()
+
+printer = Printer(ink: BlueInk())
+printer.startPrinting()
+
+printer = Printer(ink: GreenInk())
+printer.startPrinting()
+
 // ДЗ 9
 
 //Задача 1: Создайте класс Shape с методом area(), который
 //возвращает площадь фигуры.
 
-class Shape {
-    func area() -> Double {
-        return 0.0
-    }
-}
+//class Shape {
+//    func area() -> Double {
+//        return 0.0
+//    }
+//}
 
 //Задача 2: Создайте подкласс Rectangle, который наследует
 //Shape, и переопределите метод area(), чтобы возвращать
 //площадь прямоугольника.
 
-class Rectangle: Shape {
-    var length: Double
-    var width: Double
-    
-    init(length: Double, width: Double) {
-        self.length = length
-        self.width = width
-    }
-    
-    override func area() -> Double {
-        self.length * self.width
-    }
-}
+//class Rectangle: Shape {
+//    var length: Double
+//    var width: Double
+//    
+//    init(length: Double, width: Double) {
+//        self.length = length
+//        self.width = width
+//    }
+//    
+//    override func area() -> Double {
+//        self.length * self.width
+//    }
+//}
 
 //Задача 3: Создайте класс Circle, который также наследует
 //Shape и реализует метод area() для круга.
 
-class Circle: Shape {
-    var radius: Double
-    
-    init(radius: Double) {
-        self.radius = radius
-    }
-    
-    override func area() -> Double {
-        .pi * self.radius * self.radius
-    }
-}
+//class Circle: Shape {
+//    var radius: Double
+//    
+//    init(radius: Double) {
+//        self.radius = radius
+//    }
+//    
+//    override func area() -> Double {
+//        .pi * self.radius * self.radius
+//    }
+//}
 
 // Домашнее задание: Создание системы учёта студентов и сотрудников университета
 // Описание задачи:
@@ -86,75 +212,74 @@ class Circle: Shape {
 // создаваться (инициализатор должен вернуть nil).
 //  ● Если объект успешно создан, метод describe() должен корректно выводить информацию о человеке.
 
+//class Person {
+//    var name: String
+//    var age: Int
+//    
+//    init?(name: String, age: Int) {
+//        guard !name.isEmpty, age > 0 else {
+//            return nil
+//        }
+//        self.name = name
+//        self.age = age
+//    }
+//    
+//    func describe() {
+//        print("Имя: \(name), возраст: \(age)")
+//    }
+//}
+//
+//class Student: Person {
+//    var studentID: String
+//    
+//    init?(name: String, age: Int, studentID: String) {
+//        guard !studentID.isEmpty else {
+//            return nil
+//        }
+//        self.studentID = studentID
+//        super.init(name: name, age: age)
+//    }
+//    
+//    override func describe() {
+//        print("Студент: \(name), возраст: \(age), ID: \(studentID)")
+//    }
+//}
+//
+//class Professor: Person {
+//    var subject: String
+//    
+//    init?(name: String, age: Int, subject: String) {
+//        guard !subject.isEmpty else {
+//            return nil
+//        }
+//        self.subject = subject
+//        super.init(name: name, age: age)
+//    }
+//    
+//    override func describe() {
+//        print("Профессор: \(name), возраст: \(age), преподаёт: \(subject)")
+//    }
+//}
+//
+//if let student1 = Student(name: "Алексей", age: 20, studentID: "S123") {
+//    student1.describe()
+//}
+//
+//if let student2 = Student(name: "", age: 21, studentID: "S124") {
+//    student2.describe()
+//} else {
+//    print("Ошибка: студент не создан (некорректные данные)")
+//}
+//
+//if let professor1 = Professor(name: "Иван Иванович", age: 45, subject: "Математика") {
+//    professor1.describe()
+//}
 
-class Person {
-    var name: String
-    var age: Int
-    
-    init?(name: String, age: Int) {
-        guard !name.isEmpty, age > 0 else {
-            return nil
-        }
-        self.name = name
-        self.age = age
-    }
-    
-    func describe() {
-        print("Имя: \(name), возраст: \(age)")
-    }
-}
-
-class Student: Person {
-    var studentID: String
-    
-    init?(name: String, age: Int, studentID: String) {
-        guard !studentID.isEmpty else {
-            return nil
-        }
-        self.studentID = studentID
-        super.init(name: name, age: age)
-    }
-    
-    override func describe() {
-        print("Студент: \(name), возраст: \(age), ID: \(studentID)")
-    }
-}
-
-class Professor: Person {
-    var subject: String
-    
-    init?(name: String, age: Int, subject: String) {
-        guard !subject.isEmpty else {
-            return nil
-        }
-        self.subject = subject
-        super.init(name: name, age: age)
-    }
-    
-    override func describe() {
-        print("Профессор: \(name), возраст: \(age), преподаёт: \(subject)")
-    }
-}
-
-if let student1 = Student(name: "Алексей", age: 20, studentID: "S123") {
-    student1.describe()
-}
-
-if let student2 = Student(name: "", age: 21, studentID: "S124") {
-    student2.describe()
-} else {
-    print("Ошибка: студент не создан (некорректные данные)")
-}
-
-if let professor1 = Professor(name: "Иван Иванович", age: 45, subject: "Математика") {
-    professor1.describe()
-}
-
-if let professor2 = Professor(name: "Сергей", age: -5, subject: "Физика") {
-    professor2.describe()
-} else {
-    print("Ошибка: профессор не создан (некорректные данные)")
-}
+//if let professor2 = Professor(name: "Сергей", age: -5, subject: "Физика") {
+//    professor2.describe()
+//} else {
+//    print("Ошибка: профессор не создан (некорректные данные)")
+//}
 
 
 // ДЗ 7
