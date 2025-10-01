@@ -7,64 +7,130 @@
 
 import Foundation
 
+// ДЗ 11
+
+//Задание 1. Создайте структуру Student:
+//● Структура должна содержать следующие свойства:
+//○ name: имя студента (тип String).
+//○ grade: оценка студента (тип Int или Double).
+//Создайте массив студентов:
+//● Создайте массив students, состоящий из нескольких объектов типа
+//Student.
+//● Заполните массив данными о различных студентах и их оценках.
+//Используйте функции высшего порядка:
+//● filter:
+//○ Примените функцию filter для выбора студентов, у которых
+//оценка выше 4.
+//○ Результат должен быть массивом студентов, удовлетворяющих
+//этому условию.
+//● map:
+//○ Примените функцию map для преобразования массива
+//студентов в массив строк с именами студентов.
+//○ Результат должен быть массивом имен всех студентов из
+//исходного массива.
+//● reduce:
+//○ Примените функцию reduce для вычисления средней оценки
+//всех студентов.
+//○ Результат должен быть числом, представляющим среднюю
+//оценку студентов из массива.
+
+struct Student {
+    let name: String
+    let grade: Double
+}
+
+let students: [Student] = [
+    .init(name: "Александр", grade: 5.0),
+    .init(name: "Иван", grade: 3.0),
+    .init(name: "Петр", grade: 4.5),
+    .init(name: "Максим", grade: 2)
+    ]
+
+let filteredStudents = students.filter { $0.grade > 4 }
+
+let studentsNames = students.map(\.self.name)
+
+let averageGrade = students.reduce(0) { result, student in
+    result + student.grade
+} / Double(students.count)
+
+//Задание 2:
+//1. Дан массив строк. Используя функции
+//filter и count, подсчитайте, сколько
+//слов имеют длину более 4 символов.
+//2. Выведите результат.
+//Пример:
+//let words = ["Swift", "Java",
+//"Python", "C", "JavaScript"]
+//// Ожидаемый результат:
+//3 (слова "Swift", "Python" и
+//"JavaScript" имеют длину более 4
+//символов)
+
+let words: [String] = ["Swift", "Java",
+                       "Python", "C", "JavaScript"]
+
+let countOfLongWords = words.filter( {$0.count > 4})
+print(countOfLongWords)
+
 // ДЗ 10
 
 //Задача 1: Создайте протокол Playable: Метод: play(),
 //который не принимает параметров и ничего не возвращает.
 
-protocol Playable {
-    func play()
-}
-
-extension Playable {
-    func tune() {
-       print("Настройка инструмента...")
-    }
-}
+//protocol Playable {
+//    func play()
+//}
+//
+//extension Playable {
+//    func tune() {
+//       print("Настройка инструмента...")
+//    }
+//}
 
 //Задача 2: Создайте классы Piano, Guitar и Drum, которые
 //соответствуют протоколу Playable: У каждого класса метод
 //play() должен выводить, что за инструмент играет (например,
 //"Пианино играет мелодию").
 
-class Piano: Playable {
-    func play() {
-        print("Пианино играет мелодию")
-    }
-}
-
-class Guitar: Playable {
-    func play() {
-        print("Гитара играет мелодию")
-    }
-}
-
-class Drum: Playable {
-    func play() {
-        print("Барабаны играют")
-    }
-}
+//class Piano: Playable {
+//    func play() {
+//        print("Пианино играет мелодию")
+//    }
+//}
+//
+//class Guitar: Playable {
+//    func play() {
+//        print("Гитара играет мелодию")
+//    }
+//}
+//
+//class Drum: Playable {
+//    func play() {
+//        print("Барабаны играют")
+//    }
+//}
 
 //Задача 3: Создайте функцию performConcert, которая
 //принимает массив объектов, соответствующих Playable, и
 //вызывает метод play() для каждого из них.
 
-func performConcert(_ instruments: [Playable]) {
-    for instrument in instruments {
-        instrument.tune()
-        instrument.play()
-    }
-}
+//func performConcert(_ instruments: [Playable]) {
+//    for instrument in instruments {
+//        instrument.tune()
+//        instrument.play()
+//    }
+//}
 
 //Задача 4. Создайте расширение для Playable, которое
 //добавляет метод tune(), выводящий сообщение "Настройка
 //инструмента...", и вызовите его в функциях каждого объекта
 //перед play().
 
-let instrunents: [Playable] = [Piano(), Guitar(), Drum()]
-
-
-performConcert(instrunents)
+//let instrunents: [Playable] = [Piano(), Guitar(), Drum()]
+//
+//
+//performConcert(instrunents)
 
 //Домашнее задание: Создание системы учёта студентов и сотрудников университета
 //Вам необходимо разработать программу, которая моделирует работу принтера, способного печатать разными цветами.
@@ -84,54 +150,54 @@ performConcert(instrunents)
 //полиморфное поведение.
 //5. Используйте перечисления enum для определения доступных цветов.
 
-protocol Ink {
-    func printColor()
-}
+//protocol Ink {
+//    func printColor()
+//}
+//
+//enum ColorInk {
+//    case red
+//    case blue
+//    case green
+//}
+//
+//class RedInk: Ink {
+//    func printColor() {
+//        print("Печать в красном цвете...")
+//    }
+//}
+//
+//class BlueInk: Ink {
+//    func printColor() {
+//        print("Печать в синем цвете...")
+//    }
+//}
 
-enum ColorInk {
-    case red
-    case blue
-    case green
-}
-
-class RedInk: Ink {
-    func printColor() {
-        print("Печать в красном цвете...")
-    }
-}
-
-class BlueInk: Ink {
-    func printColor() {
-        print("Печать в синем цвете...")
-    }
-}
-
-class GreenInk: Ink {
-    func printColor() {
-        print("Печать в зеленом цвете...")
-    }
-}
-
-class Printer {
-    var ink: Ink
-    
-    init(ink: Ink) {
-        self.ink = ink
-    }
-    
-    func startPrinting() {
-        ink.printColor()
-    }
-}
-
-var printer = Printer(ink: RedInk())
-printer.startPrinting()
-
-printer = Printer(ink: BlueInk())
-printer.startPrinting()
-
-printer = Printer(ink: GreenInk())
-printer.startPrinting()
+//class GreenInk: Ink {
+//    func printColor() {
+//        print("Печать в зеленом цвете...")
+//    }
+//}
+//
+//class Printer {
+//    var ink: Ink
+//    
+//    init(ink: Ink) {
+//        self.ink = ink
+//    }
+//    
+//    func startPrinting() {
+//        ink.printColor()
+//    }
+//}
+//
+//var printer = Printer(ink: RedInk())
+//printer.startPrinting()
+//
+//printer = Printer(ink: BlueInk())
+//printer.startPrinting()
+//
+//printer = Printer(ink: GreenInk())
+//printer.startPrinting()
 
 // ДЗ 9
 
