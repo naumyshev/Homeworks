@@ -9,6 +9,116 @@ import Foundation
 
 // ДЗ 11
 
+// 1 - Композиция через протоколы
+//
+// Задание:
+// Создай систему плагинов:
+// Протокол Plugin с методом execute()
+// Класс App, который хранит массив [Plugin]
+// Добавь разные плагины (LoggerPlugin, AnalyticsPlugin) и вызови execute() для всех.
+
+protocol Plugin {
+    func execute()
+}
+
+class App {
+    var plugins: [Plugin] = []
+    
+    func addPlugin(_ plugin: Plugin) {
+        plugins.append(plugin)
+    }
+    
+    func runPlugins() {
+        for plugin in plugins {
+            plugin.execute()
+        }
+    }
+}
+
+class LoggerPlugin: Plugin {
+    func execute() {
+        print("Logging started")
+    }
+}
+
+class AnalyticsPlugin: Plugin {
+    func execute() {
+        print("Analytics started")
+    }
+}
+
+let app = App()
+app.addPlugin(LoggerPlugin())
+app.addPlugin(AnalyticsPlugin())
+app.runPlugins()
+
+// 2 - Протокол для тестирования (Dependency Injection)
+// Задание:
+// Создай протокол NetworkServiceProtocol с методом fetchData() -> String.
+// Сделай два класса:
+// RealNetworkService
+// MockNetworkService
+// Используй их в ViewModel, которая не знает, какой именно сервис используется.
+
+protocol NetworkServiceProtocol {
+    func fetchData() -> String
+}
+
+class RealNetworkService: NetworkServiceProtocol {
+    func fetchData() -> String {
+        return "Real data"
+    }
+}
+
+class MockNetworkService: NetworkServiceProtocol {
+    func fetchData() -> String {
+        return "Mock data"
+    }
+}
+
+class ViewModel {
+    private let networkService: NetworkServiceProtocol
+    
+    init(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
+    
+    func fetchDataAndPrint() {
+        let data = networkService.fetchData()
+        print(data)
+    }
+}
+
+
+// 3 - Наследование протоколов
+// Задание:
+// Создай Movable с методами moveForward() и moveBackward().
+// Создай Flyable, который наследует Movable и добавляет метод fly().
+// Реализуй в классе Bird.
+
+protocol Movable {
+    func moveForward()
+    func moveBackward()
+}
+
+protocol Flyable: Movable {
+    func fly()
+}
+
+class Bird: Flyable {
+    func moveForward() {
+        print("Forward")
+    }
+    func moveBackward() {
+        print("Backward")
+    }
+    func fly() {
+        print("Fly")
+    }
+}
+
+
+            
 //Задание 1. Создайте структуру Student:
 //● Структура должна содержать следующие свойства:
 //○ name: имя студента (тип String).
@@ -34,25 +144,25 @@ import Foundation
 //○ Результат должен быть числом, представляющим среднюю
 //оценку студентов из массива.
 
-struct Student {
-    let name: String
-    let grade: Double
-}
-
-let students: [Student] = [
-    .init(name: "Александр", grade: 5.0),
-    .init(name: "Иван", grade: 3.0),
-    .init(name: "Петр", grade: 4.5),
-    .init(name: "Максим", grade: 2)
-    ]
-
-let filteredStudents = students.filter { $0.grade > 4 }
-
-let studentsNames = students.map(\.self.name)
-
-let averageGrade = students.reduce(0) { result, student in
-    result + student.grade
-} / Double(students.count)
+//struct Student {
+//    let name: String
+//    let grade: Double
+//}
+//
+//let students: [Student] = [
+//    .init(name: "Александр", grade: 5.0),
+//    .init(name: "Иван", grade: 3.0),
+//    .init(name: "Петр", grade: 4.5),
+//    .init(name: "Максим", grade: 2)
+//    ]
+//
+//let filteredStudents = students.filter { $0.grade > 4 }
+//
+//let studentsNames = students.map(\.self.name)
+//
+//let averageGrade = students.reduce(0) { result, student in
+//    result + student.grade
+//} / Double(students.count)
 
 //Задание 2:
 //1. Дан массив строк. Используя функции
