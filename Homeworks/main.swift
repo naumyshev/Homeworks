@@ -7,6 +7,44 @@
 
 import Foundation
 
+// ДЗ 12
+
+// 1- Создай клоужер, который просто выводит "Hello, Swift!"
+
+let hello = { print("Hello, Swift!") }
+
+hello()
+
+//2-Создай клоужер, который принимает имя и выводит приветствие.
+
+let greet: (String) -> Void = { print("Hello, \($0)!") }
+
+greet("Student")
+
+// 3-Создай клоужер, который принимает два числа и возвращает их сумму.
+
+let add:(Int,Int)->Int = { $0 + $1 }
+
+print(add(2, 3)) // 5
+
+// 4-Создай функцию, которая принимает клоужер(простой, ничего не принимает и не возвращает () -> Void) и вызывает его.
+
+func doSomething (action: () -> Void) {
+    action()
+}
+
+ doSomething {
+     print("Действие выполнено!")
+}
+
+// 5-Функция должна принять клоужер, который принимает число и печатает его квадрат.
+
+func printSquare( number: Int, action: (Int) -> Void) {
+    action(number)
+}
+
+printSquare(number: 5) { print($0 * $0)}
+
 // ДЗ 11
 
 // 1 - Композиция через протоколы
@@ -17,40 +55,40 @@ import Foundation
 // Класс App, который хранит массив [Plugin]
 // Добавь разные плагины (LoggerPlugin, AnalyticsPlugin) и вызови execute() для всех.
 
-protocol Plugin {
-    func execute()
-}
+//protocol Plugin {
+//    func execute()
+//}
+//
+//class App {
+//    var plugins: [Plugin] = []
+//    
+//    func addPlugin(_ plugin: Plugin) {
+//        plugins.append(plugin)
+//    }
+//    
+//    func runPlugins() {
+//        for plugin in plugins {
+//            plugin.execute()
+//        }
+//    }
+//}
 
-class App {
-    var plugins: [Plugin] = []
-    
-    func addPlugin(_ plugin: Plugin) {
-        plugins.append(plugin)
-    }
-    
-    func runPlugins() {
-        for plugin in plugins {
-            plugin.execute()
-        }
-    }
-}
+//class LoggerPlugin: Plugin {
+//    func execute() {
+//        print("Logging started")
+//    }
+//}
+//
+//class AnalyticsPlugin: Plugin {
+//    func execute() {
+//        print("Analytics started")
+//    }
+//}
 
-class LoggerPlugin: Plugin {
-    func execute() {
-        print("Logging started")
-    }
-}
-
-class AnalyticsPlugin: Plugin {
-    func execute() {
-        print("Analytics started")
-    }
-}
-
-let app = App()
-app.addPlugin(LoggerPlugin())
-app.addPlugin(AnalyticsPlugin())
-app.runPlugins()
+//let app = App()
+//app.addPlugin(LoggerPlugin())
+//app.addPlugin(AnalyticsPlugin())
+//app.runPlugins()
 
 // 2 - Протокол для тестирования (Dependency Injection)
 // Задание:
@@ -60,35 +98,35 @@ app.runPlugins()
 // MockNetworkService
 // Используй их в ViewModel, которая не знает, какой именно сервис используется.
 
-protocol NetworkServiceProtocol {
-    func fetchData() -> String
-}
+//protocol NetworkServiceProtocol {
+//    func fetchData() -> String
+//}
+//
+//class RealNetworkService: NetworkServiceProtocol {
+//    func fetchData() -> String {
+//        return "Real data"
+//    }
+//}
+//
+//class MockNetworkService: NetworkServiceProtocol {
+//    func fetchData() -> String {
+//        return "Mock data"
+//    }
+//}
 
-class RealNetworkService: NetworkServiceProtocol {
-    func fetchData() -> String {
-        return "Real data"
-    }
-}
-
-class MockNetworkService: NetworkServiceProtocol {
-    func fetchData() -> String {
-        return "Mock data"
-    }
-}
-
-class ViewModel {
-    private let networkService: NetworkServiceProtocol
-    
-    init(networkService: NetworkServiceProtocol) {
-        self.networkService = networkService
-    }
-    
-    func fetchDataAndPrint() {
-        let data = networkService.fetchData()
-        print(data)
-    }
-}
-
+//class ViewModel {
+//    private let networkService: NetworkServiceProtocol
+//    
+//    init(networkService: NetworkServiceProtocol) {
+//        self.networkService = networkService
+//    }
+//    
+//    func fetchDataAndPrint() {
+//        let data = networkService.fetchData()
+//        print(data)
+//    }
+//}
+//
 
 // 3 - Наследование протоколов
 // Задание:
@@ -96,26 +134,26 @@ class ViewModel {
 // Создай Flyable, который наследует Movable и добавляет метод fly().
 // Реализуй в классе Bird.
 
-protocol Movable {
-    func moveForward()
-    func moveBackward()
-}
-
-protocol Flyable: Movable {
-    func fly()
-}
-
-class Bird: Flyable {
-    func moveForward() {
-        print("Forward")
-    }
-    func moveBackward() {
-        print("Backward")
-    }
-    func fly() {
-        print("Fly")
-    }
-}
+//protocol Movable {
+//    func moveForward()
+//    func moveBackward()
+//}
+//
+//protocol Flyable: Movable {
+//    func fly()
+//}
+//
+//class Bird: Flyable {
+//    func moveForward() {
+//        print("Forward")
+//    }
+//    func moveBackward() {
+//        print("Backward")
+//    }
+//    func fly() {
+//        print("Fly")
+//    }
+//}
 
 
             
