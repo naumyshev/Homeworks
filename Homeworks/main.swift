@@ -7,43 +7,121 @@
 
 import Foundation
 
+// ДЗ 13
+
+// 1 - Простые ссылки
+// Создай класс Person с полем name и распечатай, когда объект деинициализируется (deinit).
+// Создай несколько сильных ссылок (strong) на один объект и убедись, что deinit вызывается только после удаления всех ссылок.
+
+// 2 - Сильные и слабые ссылки
+// Создай класс Dog, внутри которого есть свойство owner: Person?.
+// Создай Person, у которого есть pet: Dog?.
+// Проверь, что произойдет, если обе ссылки будут strong, а потом сделай одну weak.
+
+class Person {
+    var name: String
+    var pet: Dog?
+    
+    init(name: String) {
+        self.name = name
+        print("Person \(name) initialized")
+    }
+    
+    deinit {
+        print("Person \(name) deinitialized")
+    }
+}
+
+class Dog {
+    var name: String
+    weak var owner: Person?
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+var person1: Person? = Person(name: "Alex")
+//var person2: Person? = Person(name: "Sasha")
+var pet: Dog? = Dog(name: "Barsik")
+
+person1?.pet = pet
+pet?.owner = person1
+
+//person1 = person2
+//person2 = nil
+person1 = nil
+
+
+// 3 - Closures и утечки
+// Создай класс Downloader с методом start() и замыканием onComplete.
+// Внутри start() создай замыкание, которое обращается к self.
+// Покажи, что без [weak self] объект не деинициализируется.
+// Исправь, добавив [weak self] и проверь, что deinit теперь вызывается.
+
+class Downloader {
+    var name: String
+    var onComplete: (() -> Void)?
+    
+    func start() {
+        onComplete = { [weak self] in
+            guard let self else { return }
+            print("Download \(self.name)completed")
+        }
+    }
+    
+    init (name: String) {
+        self.name = name
+    }
+    
+    deinit {
+        print("Downloader deinitialized")
+    }
+}
+
+var downloader: Downloader? = Downloader(name: "Alex")
+downloader?.start()
+downloader?.onComplete?()
+downloader = nil
+
+
 // ДЗ 12
 
 // 1- Создай клоужер, который просто выводит "Hello, Swift!"
 
-let hello = { print("Hello, Swift!") }
-
-hello()
+//let hello = { print("Hello, Swift!") }
+//
+//hello()
 
 //2-Создай клоужер, который принимает имя и выводит приветствие.
 
-let greet: (String) -> Void = { print("Hello, \($0)!") }
-
-greet("Student")
+//let greet: (String) -> Void = { print("Hello, \($0)!") }
+//
+//greet("Student")
 
 // 3-Создай клоужер, который принимает два числа и возвращает их сумму.
 
-let add:(Int,Int)->Int = { $0 + $1 }
-
-print(add(2, 3)) // 5
+//let add:(Int,Int)->Int = { $0 + $1 }
+//
+//print(add(2, 3)) // 5
 
 // 4-Создай функцию, которая принимает клоужер(простой, ничего не принимает и не возвращает () -> Void) и вызывает его.
 
-func doSomething (action: () -> Void) {
-    action()
-}
-
- doSomething {
-     print("Действие выполнено!")
-}
+//func doSomething (action: () -> Void) {
+//    action()
+//}
+//
+// doSomething {
+//     print("Действие выполнено!")
+//}
 
 // 5-Функция должна принять клоужер, который принимает число и печатает его квадрат.
 
-func printSquare( number: Int, action: (Int) -> Void) {
-    action(number)
-}
-
-printSquare(number: 5) { print($0 * $0)}
+//func printSquare( number: Int, action: (Int) -> Void) {
+//    action(number)
+//}
+//
+//printSquare(number: 5) { print($0 * $0)}
 
 // ДЗ 11
 
@@ -215,11 +293,11 @@ printSquare(number: 5) { print($0 * $0)}
 //"JavaScript" имеют длину более 4
 //символов)
 
-let words: [String] = ["Swift", "Java",
-                       "Python", "C", "JavaScript"]
-
-let countOfLongWords = words.filter( {$0.count > 4})
-print(countOfLongWords)
+//let words: [String] = ["Swift", "Java",
+//                       "Python", "C", "JavaScript"]
+//
+//let countOfLongWords = words.filter( {$0.count > 4})
+//print(countOfLongWords)
 
 // ДЗ 10
 
