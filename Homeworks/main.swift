@@ -7,6 +7,186 @@
 
 import Foundation
 
+// ДЗ 14
+
+// 1 -Функция поиска элемента
+// Создай обобщённую функцию containsElement(_:_:), которая проверяет, содержится ли элемент в массиве.
+
+func containsElement<T: Equatable>(_ array: [T]?, _ element: T) -> Bool {
+    guard let array = array else {
+        return false
+    }
+    return array.contains(element)
+}
+
+let array: [Int]? = [1, 2, 3, 4, 5]
+print(containsElement(array, 3))
+print(containsElement(array, 6)) 
+print(containsElement(nil, 1))
+
+let array2: [String]? = ["a", "b", "c", "d", "e"]
+print(containsElement(array2, "c"))
+print(containsElement(array2, "f"))
+print(containsElement(nil, "1"))
+
+// 2- Создать массив из двух элементов
+// Напиши функцию, которая принимает два значения одного типа и возвращает массив из них.
+//
+// пример
+// makeArray(1, 2) → [1, 2]
+
+func makeArray<T>(_ first: T, _ second: T) -> [T] {
+    return [first, second]
+}
+
+print(makeArray(1, 2))
+print(makeArray(1.0, 2.0))
+print(makeArray("1", "2"))
+
+// 3- Напиши обобщённую функцию, которая сравнивает два значения (если тип поддерживает Equatable).
+//
+// пример
+// isEqual("hi", "hi") → true
+// isEqual(10, 20) → false
+
+func isEqual<T: Equatable>(_ first: T, _ second: T) -> Bool {
+    return first == second
+}
+
+print(isEqual("hi", "hi"))
+print(isEqual(10, 20))
+
+// 4-Напиши функцию, которая создаёт словарь из массивов ключей и значений.
+//
+// пример
+// makeDictionary(keys: ["a", "b"], values: [1, 2]) → ["a": 1, "b": 2]
+
+func makeDictionary<Key: Hashable, Value>(keys: [Key], values: [Value]) -> [Key: Value] {
+    var resultDictionary: [Key: Value] = [:]
+    for (index, key) in keys.enumerated() {
+        resultDictionary[key] = values[index]
+    }
+    return resultDictionary
+}
+
+print(makeDictionary(keys: ["a", "b"], values: [1, 2]))
+
+// 5 - Обобщённая структура Pair
+// Создай структуру Pair, которая хранит два значения любого типа.
+
+struct Pair<T, V> {
+    let first: T
+    let second: V
+}
+
+let pair: Pair<String, Int> = Pair(first: "Hello", second: 123)
+print(pair)
+
+//  Сложнее
+//
+// 1- Создай класс Cache<Key, Value>, где Key: Hashable.
+// Добавь методы set, get, remove.
+
+class Cache<Key: Hashable, Value> {
+    private var cache: [Key: Value] = [:]
+    
+    func set(_ key: Key, _ value: Value) {
+        cache[key] = value
+    }
+    
+    func get(_ key: Key) -> Value? {
+        return cache[key]
+    }
+    
+    func remove(_ key: Key) {
+        cache[key] = nil
+    }
+}
+
+// 2- Класс KeyValueStore
+// Создай дженерик-класс для хранения пар "ключ-значение".
+//
+// пример
+// let userAges = KeyValueStore<String, Int>()
+// userAges.set(25, for: "Alice")
+// print(userAges.get(for: "Alice") ?? 0) // 25
+
+class KeyValueStore<Key: Hashable, Value> {
+    private var store: [Key: Value] = [:]
+    
+    func set(_ value: Value, for key: Key) {
+        store[key] = value
+    }
+    
+    func get(for key: Key) -> Value? {
+        return store[key]
+    }
+}
+
+let userAges = KeyValueStore<String, Int>()
+userAges.set(25, for: "Alice")
+print(userAges.get(for: "Alice") ?? 0)
+
+
+// 3- Класс Logger
+// Создай класс Logger, который принимает сообщения любого типа и сохраняет их в массив.
+//
+// пример
+// let intLogger = Logger<Int>()
+// intLogger.add(1)
+// intLogger.add(2)
+// intLogger.showAll() // 1 2
+//
+// let stringLogger = Logger<String>()
+// stringLogger.add("Start")
+// stringLogger.add("End")
+// stringLogger.showAll() // Start End
+
+class Logger<T> {
+    private var messages: [T] = []
+    
+    func add(_ message: T) {
+        messages.append(message)
+    }
+    
+    func showAll() {
+            print(messages.map { "\($0)" }.joined(separator: " "))
+    }
+}
+
+let stringLogger = Logger<String>()
+ stringLogger.add("Start")
+ stringLogger.add("End")
+ stringLogger.showAll() // Start End
+
+//4 - Создай протокол Repository, который хранит данные любого типа (ассоциативный тип) и имеет методы save и getAll. Реализуй этот протокол для дженерик класса
+
+protocol Repository {
+    associatedtype Item
+    
+    func save(_ item: Item)
+    func getAll() -> [Item]
+}
+
+class ArrayRepository<T>: Repository {
+    private var items: [T] = []
+    
+    func save(_ item: T) {
+        items.append(item)
+    }
+    
+    func getAll() -> [T] {
+        return items
+    }
+}
+
+let stringRepo = ArrayRepository<String>()
+stringRepo.save("Hello")
+stringRepo.save("World")
+print(stringRepo.getAll())
+
+
+
 // ДЗ 13
 
 // 1 - Простые ссылки
@@ -18,39 +198,39 @@ import Foundation
 // Создай Person, у которого есть pet: Dog?.
 // Проверь, что произойдет, если обе ссылки будут strong, а потом сделай одну weak.
 
-class Person {
-    var name: String
-    var pet: Dog?
-    
-    init(name: String) {
-        self.name = name
-        print("Person \(name) initialized")
-    }
-    
-    deinit {
-        print("Person \(name) deinitialized")
-    }
-}
+//class Person {
+//    var name: String
+//    var pet: Dog?
+//    
+//    init(name: String) {
+//        self.name = name
+//        print("Person \(name) initialized")
+//    }
+//    
+//    deinit {
+//        print("Person \(name) deinitialized")
+//    }
+//}
 
-class Dog {
-    var name: String
-    weak var owner: Person?
-    
-    init(name: String) {
-        self.name = name
-    }
-}
+//class Dog {
+//    var name: String
+//    weak var owner: Person?
+//    
+//    init(name: String) {
+//        self.name = name
+//    }
+//}
 
-var person1: Person? = Person(name: "Alex")
-//var person2: Person? = Person(name: "Sasha")
-var pet: Dog? = Dog(name: "Barsik")
-
-person1?.pet = pet
-pet?.owner = person1
-
-//person1 = person2
-//person2 = nil
-person1 = nil
+//var person1: Person? = Person(name: "Alex")
+////var person2: Person? = Person(name: "Sasha")
+//var pet: Dog? = Dog(name: "Barsik")
+//
+//person1?.pet = pet
+//pet?.owner = person1
+//
+////person1 = person2
+////person2 = nil
+//person1 = nil
 
 
 // 3 - Closures и утечки
@@ -59,30 +239,30 @@ person1 = nil
 // Покажи, что без [weak self] объект не деинициализируется.
 // Исправь, добавив [weak self] и проверь, что deinit теперь вызывается.
 
-class Downloader {
-    var name: String
-    var onComplete: (() -> Void)?
-    
-    func start() {
-        onComplete = { [weak self] in
-            guard let self else { return }
-            print("Download \(self.name)completed")
-        }
-    }
-    
-    init (name: String) {
-        self.name = name
-    }
-    
-    deinit {
-        print("Downloader deinitialized")
-    }
-}
+//class Downloader {
+//    var name: String
+//    var onComplete: (() -> Void)?
+//    
+//    func start() {
+//        onComplete = { [weak self] in
+//            guard let self else { return }
+//            print("Download \(self.name)completed")
+//        }
+//    }
+//    
+//    init (name: String) {
+//        self.name = name
+//    }
+//    
+//    deinit {
+//        print("Downloader deinitialized")
+//    }
+//}
 
-var downloader: Downloader? = Downloader(name: "Alex")
-downloader?.start()
-downloader?.onComplete?()
-downloader = nil
+//var downloader: Downloader? = Downloader(name: "Alex")
+//downloader?.start()
+//downloader?.onComplete?()
+//downloader = nil
 
 
 // ДЗ 12
